@@ -1,21 +1,6 @@
 # scraping-template
 
-scraping-template description here
-
-[![Build Status][travis-image]][travis-url]
-[![NPM version][npm-image]][npm-url]
-
-## Install
-
-```bash
-npm i scraping-template
-```
-
-## Usage
-
-```js
-const scraping-template = require('scraping-template');
-```
+_Under construction_
 
 ## License
 
