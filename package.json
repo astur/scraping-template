@@ -5,13 +5,6 @@
   "description": "",
   "main": "index.js",
   "author": "astur <astur@yandex.ru> (http://kozlov.am/)",
-  "scripts": {
-    "test": "eslint . && nyc ava -v"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/astur/scraping-template.git"
-  },
   "engines": {
     "node": ">=8.0.0"
   },
