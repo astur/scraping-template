@@ -12,5 +12,8 @@
     "eslint": "^4.13.0",
     "eslint-config-astur": "0.0.2"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "lavine": "^1.0.0"
+  }
 }
