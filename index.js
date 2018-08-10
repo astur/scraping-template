@@ -1,3 +1,5 @@
 const scrape = require('./scrape');
 
-scrape();
+(async () => {
+    await scrape();
+})();
