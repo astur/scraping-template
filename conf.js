@@ -5,6 +5,8 @@ conf.concurrency = 20;
 conf.id = 'test';
 conf.targets = process.argv.slice(2);
 
+conf.mongoString = process.env.MONGO_URI || 'mongodb://localhost:27017/test';
+
 conf.waitForActive = 500;
 
 conf.httpOptions = {
