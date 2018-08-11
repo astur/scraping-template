@@ -3,6 +3,5 @@ const lavine = require('lavine');
 const scrape = require('./scrape');
 
 (async () => {
-    await scrape();
-    lavine(() => scrape, concurrency);
+    await lavine(() => scrape, concurrency);
 })();
