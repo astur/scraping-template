@@ -3,6 +3,7 @@ const conf = {};
 conf.concurrency = 20;
 
 conf.id = 'test';
+conf.targets = process.argv.slice(2);
 
 conf.save = {
     valid: `data_${conf.id}`,
@@ -11,6 +12,7 @@ conf.save = {
 };
 conf.queue = {
     name: `mq_${conf.id}`,
+    clean: !!conf.targets.length,
     strict: true,
     tries: 1,
 };
