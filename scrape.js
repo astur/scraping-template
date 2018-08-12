@@ -5,16 +5,22 @@ const save = require('./save');
 
 module.exports = async () => {
     const {data: url, tag} = await q.get();
-    const response = await scra({url});
-    const parsed = await parse(response);
-    await q.ping(tag);
-    const saved = await save(parsed.records);
-    await q.add(parsed.urls);
-    await q.ack(tag);
-    return {
-        requestTime: response.requestTime,
-        bytesSent: response.bytes.sent,
-        bytesReceived: response.bytes.received,
-        ...saved,
-    };
+
+    try {
+        const response = await scra({url});
+        const parsed = await parse(response);
+        await q.ping(tag);
+        const saved = await save(parsed.records);
+        await q.add(parsed.urls);
+        await q.ack(tag);
+        return {
+            requestTime: response.requestTime,
+            bytesSent: response.bytes.sent,
+            bytesReceived: response.bytes.received,
+            ...saved,
+        };
+    } catch(e){
+        await q.ack(tag);
+        throw e;
+    }
 };
