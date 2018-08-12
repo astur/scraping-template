@@ -1,13 +1,15 @@
 const {waitForActive, targets} = require('./conf');
 const db = require('./db');
+const log = require('cllc')(null, '%F %T');
 const delay = require('delay');
 const q = require('./queue');
 
-const onSuccess = () =>
+const onSuccess = () => {
     // flow synchronization
     // collect scrape results (when present)
-    // increment counters
-    true;
+    log.inc(1); // increment counters
+    return true;
+};
 
 const onError = async e => {
     // tl;dr:
@@ -32,7 +34,7 @@ const onError = async e => {
     // return true
 
     // collect error
-    // increment counters
+    log.inc(2); // increment counters
 
     // if known error:
     // [optional] q.add url (if you want to try again)
@@ -40,7 +42,7 @@ const onError = async e => {
     // return/throw (see above)
 
     // if unknown error:
-    // log message
+    log.e(e); // log message
     // stop all threads some way
     // return false
 };
