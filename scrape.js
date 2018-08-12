@@ -3,11 +3,11 @@ const scra = require('scra');
 const parse = require('./parse');
 const save = require('./save');
 
-module.exports = async () => {
+module.exports = async options => {
     const {data: url, tag} = await q.get();
 
     try {
-        const response = await scra({url});
+        const response = await scra({...options, url});
         const parsed = await parse(response);
         await q.ping(tag);
         const saved = await save(parsed.records);
