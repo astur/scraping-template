@@ -8,6 +8,7 @@ conf.targets = process.argv.slice(2);
 conf.mongoString = process.env.MONGO_URI || 'mongodb://localhost:27017/test';
 
 conf.waitForActive = 500;
+conf.minDelay = 50;
 
 conf.httpOptions = {
     timeout: 10000,
