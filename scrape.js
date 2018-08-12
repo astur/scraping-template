@@ -8,7 +8,13 @@ module.exports = async () => {
     const response = await scra({url});
     const parsed = await parse(response);
     await q.ping(tag);
-    await save(parsed.records);
+    const saved = await save(parsed.records);
     await q.add(parsed.urls);
     await q.ack(tag);
+    return {
+        requestTime: response.requestTime,
+        bytesSent: response.bytes.sent,
+        bytesReceived: response.bytes.received,
+        ...saved,
+    };
 };
