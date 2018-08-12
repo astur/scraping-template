@@ -73,6 +73,7 @@ const onFinish = async () => {
         log.e(e);
     }
     (await db).close();
+    _.resume();
     // other cleanups
 };
 
