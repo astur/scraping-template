@@ -65,9 +65,13 @@ const onStart = async () => {
 };
 
 const onFinish = async () => {
-    const sum = summary();
-    log.finish(); // stop counters
-    log.i('Scraping finished\n', sum); // log message and collected summary
+    try {
+        const sum = summary();
+        log.finish(); // stop counters
+        log.i('Scraping finished\n', sum); // log message and collected summary
+    } catch(e){
+        log.e(e);
+    }
     (await db).close();
     // other cleanups
 };
