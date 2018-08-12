@@ -3,10 +3,12 @@ const db = require('./db');
 const log = require('cllc')(null, '%F %T');
 const delay = require('delay');
 const q = require('./queue');
+const {collect, summary} = require('./sc');
 
-const onSuccess = () => {
+const onSuccess = result => {
     // flow synchronization
-    // collect scrape results (when present)
+    collect('requestCountSuccess', 1);
+    collect(result); // collect scrape results
     log.inc(1); // increment counters
     return true;
 };
@@ -33,7 +35,7 @@ const onError = async e => {
     // increment counters
     // return true
 
-    // collect error
+    collect('requestCountError', 1); // collect error
     log.inc(2); // increment counters
 
     // if known error:
@@ -54,9 +56,9 @@ const onStart = async () => {
 };
 
 const onFinish = async () => {
+    const sum = summary();
     log.finish(); // stop counters
-    log.i('Scraping finished'); // log message
-    // log collected summary
+    log.i('Scraping finished\n', sum); // log message and collected summary
     (await db).close();
     // other cleanups
 };
