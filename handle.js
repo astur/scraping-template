@@ -4,9 +4,10 @@ const log = require('cllc')(null, '%F %T');
 const delay = require('delay');
 const q = require('./queue');
 const {collect, summary} = require('./sc');
+const _ = require('./conductor');
 
-const onSuccess = result => {
-    // flow synchronization
+const onSuccess = async result => {
+    await _.wait(); // flow synchronization
     collect('requestCountSuccess', 1);
     collect(result); // collect scrape results
     log.inc(1); // increment counters
@@ -15,18 +16,22 @@ const onSuccess = result => {
 
 const onError = async e => {
     // tl;dr:
-    // return true if you want to continue
+    // return `!_.stopped()`) if you want to continue (if not stopped)
     // return false if you want to stop this thread
     // throw error (or anything else) if you want to change worker (if you have another)
+    // call _.stop if you want softly stop all threads
+    // call _.pause if you want delay all threads
+    // call delay if you want delay only one thread
+    // call _.error(<tag>) if you want check count of errors (all and for this tag)
 
-    // flow synchronization (here and below)
+    await _.wait(); // flow synchronization
 
     if(e.name === 'QueueGetError'){
         if(e.stats.active){
             await delay(waitForActive);
-            return true;
+            return !_.stopped();
         }
-        return false;
+        return;
     }
 
     // if redirect or other "non-error":
@@ -45,7 +50,11 @@ const onError = async e => {
 
     // if unknown error:
     log.e(e); // log message
-    // stop all threads some way
+    _.stop({
+        status: 'error',
+        error: e.name,
+        message: e.message,
+    }); // stop all threads
     // return false
 };
 
