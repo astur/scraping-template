@@ -23,10 +23,18 @@ conf.httpOptions = {
 };
 
 conf.save = {
-    valid: `data_${conf.id}`,
-    errors: `errors_${conf.id}`,
-    index: 'url',
+    data: {
+        valid: `data_${conf.id}`,
+        errors: `errors_${conf.id}`,
+        index: 'url',
+    },
+    log: {
+        valid: `log_${conf.id}`,
+        errors: `log_${conf.id}`,
+        index: 'startDt',
+    },
 };
+
 conf.queue = {
     name: `mq_${conf.id}`,
     clean: !!conf.targets.length,
