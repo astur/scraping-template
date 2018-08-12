@@ -2,6 +2,7 @@ const {waitForActive, targets} = require('./conf');
 const db = require('./db');
 const log = require('cllc')(null, '%F %T');
 const delay = require('delay');
+const {saveLog} = require('./save');
 const q = require('./queue');
 const {collect, summary} = require('./sc');
 const _ = require('./conductor');
@@ -69,6 +70,7 @@ const onFinish = async () => {
         const sum = summary(_.stopped());
         log.finish(); // stop counters
         log.i(`Scraping ${sum.status === 'ok' ? 'finished' : 'stopped'}\n`, sum); // log message and collected summary
+        await saveLog(sum);
     } catch(e){
         log.e(e);
     }
