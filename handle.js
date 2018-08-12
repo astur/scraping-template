@@ -49,11 +49,12 @@ const onError = async e => {
 
 const onStart = async () => {
     log.i(`Scraping ${targets ? 'started' : 'resumed'}`); // log message
-    // start counters
+    log.start('[ %s - pages scraped | %s - errors ]'); // start counters
     if(targets) await q.add(targets);
 };
 
 const onFinish = async () => {
+    log.finish(); // stop counters
     log.i('Scraping finished'); // log message
     // log collected summary
     (await db).close();
