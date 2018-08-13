@@ -22,6 +22,8 @@ conf.httpOptions = {
     compressed: true,
 };
 
+conf.validate = {codes: 200, bodyMatch: /<\/html>/};
+
 conf.save = {
     data: {
         valid: `data_${conf.id}`,
