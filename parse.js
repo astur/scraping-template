@@ -2,15 +2,20 @@ module.exports = res => {
     const records = [];
     const urls = [];
 
-    records.push({
+    const r = {
         url: res.url,
         status: res.statusCode,
         contentType: res.headers['content-type'],
         requestDt: new Date(res.timings.start),
-        data: typeof res.body === 'string' ?
-            (res.body.match(/<title[^>]*>([^>]+)</i) || [])[1] || null :
-            JSON.stringify(res.body),
-    });
+    };
+
+    if(typeof res.body === 'string'){
+        r.title = (res.body.match(/<title[^>]*>([^>]+)</i) || [])[1] || null;
+    } else {
+        r.data = JSON.stringify(res.body);
+    }
+
+    records.push(r);
 
     return {records, urls};
 };
