@@ -12,6 +12,7 @@ module.exports = res => {
     if(typeof res.body === 'string'){
         r.title = (res.body.match(/<title[^>]*>([^>]+)</i) || [])[1] || null;
         r.length = res.body.length;
+        r.charset = res.charset;
     } else {
         r.data = JSON.stringify(res.body);
     }
