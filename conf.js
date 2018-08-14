@@ -4,6 +4,7 @@ conf.concurrency = 20;
 
 conf.id = 'test';
 conf.targets = process.argv.slice(2);
+conf.index = 'url';
 
 conf.mongoString = process.env.MONGO_URI || 'mongodb://localhost:27017/test';
 
@@ -28,7 +29,7 @@ conf.save = {
     data: {
         valid: `data_${conf.id}`,
         errors: `errors_${conf.id}`,
-        index: 'url',
+        index: conf.index,
     },
     log: {
         valid: `log_${conf.id}`,
