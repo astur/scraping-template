@@ -23,17 +23,4 @@ conf.httpOptions = {
     compressed: true,
 };
 
-conf.save = {
-    data: {
-        valid: `data_${conf.id}`,
-        errors: `errors_${conf.id}`,
-        index: conf.index,
-    },
-    log: {
-        valid: `log_${conf.id}`,
-        errors: `log_${conf.id}`,
-        index: 'startDt',
-    },
-};
-
 module.exports = conf;
