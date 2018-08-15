@@ -1,3 +1,4 @@
+require('dotenv').config();
 const conf = {};
 
 conf.concurrency = 1;
