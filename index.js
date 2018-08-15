@@ -1,4 +1,4 @@
-const {concurrency, httpOptions, minDelay} = require('./conf');
+const {concurrency, httpOptions, minDelay, proxyList} = require('./conf');
 const lavine = require('lavine');
 const unquick = require('unquick');
 const scrape = require('./scrape');
@@ -9,7 +9,13 @@ const {onStart, onFinish, onSuccess, onError} = require('./handle');
         options => scrape(options).then(onSuccess, onError),
         minDelay || 0
     );
-    const getWorker = () => () => worker(httpOptions);
+    const getWorker = () => {
+        if(!proxyList || !proxyList.length) return () => worker(httpOptions);
+        const proxy = proxyList.shift();
+        if(!proxy) return null;
+        const opt = {...httpOptions, proxy};
+        return () => worker(opt);
+    };
     await onStart();
     await lavine(getWorker, concurrency);
     await onFinish();

@@ -23,4 +23,6 @@ conf.httpOptions = {
     compressed: true,
 };
 
+conf.proxyList = null;
+
 module.exports = conf;
