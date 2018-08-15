@@ -1,6 +1,6 @@
 require('dotenv').config();
 const conf = {};
-const cli = require('oopt')('c:T:t:n:e:E:p:P:f:i:');
+const cli = require('oopt')('c:T:t:n:e:E:p:P:f:i:X');
 
 // i - site id
 // c - concurrency
@@ -14,6 +14,7 @@ const cli = require('oopt')('c:T:t:n:e:E:p:P:f:i:');
 // _ - add targets from cli
 // f - add targets from file
 // I - save collection index
+// X - clean data/error DB
 
 conf.concurrency = +cli.c || process.env.CONCURRENCY || 1;
 
@@ -25,6 +26,8 @@ conf.targets = cli._;
 conf.proxyList = null;
 
 conf.mongoString = process.env.MONGO_URI || 'mongodb://localhost:27017/test';
+
+conf.cleanDB = cli.X;
 
 conf.waitForActive = +process.env.WAIT_FOR_ACTIVE || 50;
 conf.minDelay = +process.env.SCRAPE_MIN_DELAY || null;
