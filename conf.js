@@ -2,6 +2,19 @@ require('dotenv').config();
 const conf = {};
 const cli = require('oopt')('c:T:t:n:e:E:p:P:f:i:');
 
+// i - site id
+// c - concurrency
+// T - http timeout
+// t - scrape maxTime in ms
+// n - scrape maxTasks
+// e - scrape maxErrors
+// E - scrape maxTagErrors
+// p - use proxy from cli
+// P - add proxy list from file
+// _ - add targets from cli
+// f - add targets from file
+// I - save collection index
+
 conf.concurrency = +cli.c || process.env.CONCURRENCY || 1;
 
 conf.id = cli.i || 'test';
