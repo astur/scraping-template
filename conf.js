@@ -1,15 +1,16 @@
 const conf = {};
 
-conf.concurrency = 20;
+conf.concurrency = 1;
 
 conf.id = 'test';
-conf.targets = process.argv.slice(2);
 conf.index = 'url';
+
+conf.targets = process.argv.slice(2);
 
 conf.mongoString = process.env.MONGO_URI || 'mongodb://localhost:27017/test';
 
-conf.waitForActive = 500;
-conf.minDelay = 50;
+conf.waitForActive = 50;
+conf.minDelay = null;
 
 conf.maxTime = null;
 conf.maxTasks = null;
