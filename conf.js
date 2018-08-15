@@ -36,11 +36,4 @@ conf.save = {
     },
 };
 
-conf.queue = {
-    name: `mq_${conf.id}`,
-    clean: !!conf.targets.length,
-    strict: true,
-    tries: 1,
-};
-
 module.exports = conf;
