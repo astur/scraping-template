@@ -1,6 +1,7 @@
 require('dotenv').config();
 const conf = {};
 const cli = require('oopt')('c:T:t:n:e:E:p:P:f:i:X');
+const readar = require('readar');
 
 // i - site id
 // c - concurrency
@@ -21,10 +22,6 @@ conf.concurrency = +cli.c || process.env.CONCURRENCY || 1;
 conf.id = cli.i || 'test';
 conf.index = (cli.I || process.env.SCRAPE_SAVE_INDEX || 'url').split(/[.|,:]/);
 
-conf.targets = cli._;
-
-conf.proxyList = null;
-
 conf.mongoString = process.env.MONGO_URI || 'mongodb://localhost:27017/test';
 
 conf.cleanDB = cli.X;
@@ -43,5 +40,12 @@ conf.httpOptions = {
     timeout: +cli.T || +process.env.HTTP_TIMEOUT || 10000,
     compressed: true,
 };
+
+conf.targets = cli._ || [];
+if(cli.f) conf.targets.push(...readar(cli.f));
+
+conf.proxyList = [];
+if(cli.p) conf.proxyList.push(cli.p);
+if(cli.P) conf.proxyList.push(...readar(cli.P));
 
 module.exports = conf;
