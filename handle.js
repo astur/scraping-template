@@ -32,7 +32,7 @@ const onError = async e => {
             await delay(waitForActive);
             return !_.stopped();
         }
-        return;
+        return false;
     }
 
     // if redirect or other "non-error":
@@ -56,7 +56,7 @@ const onError = async e => {
         error: e.name,
         message: e.message,
     }); // stop all threads
-    // return false
+    return false;
 };
 
 const onStart = async () => {
