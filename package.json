@@ -6,7 +6,7 @@
   "main": "index.js",
   "author": "astur <astur@yandex.ru> (http://kozlov.am/)",
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=8.3.0"
   },
   "devDependencies": {
     "eslint": "^5.4.0",
